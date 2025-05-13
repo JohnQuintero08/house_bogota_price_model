@@ -79,7 +79,7 @@ df_copy['age'] = df_copy['age'].map(dict_age)
 
 df_copy = df_copy.reset_index(drop=True)
 
-
+df_copy.to_feather("../data/preprocessed_data.feather")
 
 
 
