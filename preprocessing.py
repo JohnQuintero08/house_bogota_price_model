@@ -1,68 +1,65 @@
+
 import pandas as pd
-from matplotlib import pyplot as plt
-import seaborn as sns
 import numpy as np
 
 df = pd.read_feather('../data/clened_houses_data.feather')
 
 df_copy = df.copy()
 
-# Rellenar los valores nulos de la variable built_area en caso de que la variable private_area si los tenga
+# Fill the null value of built_area in case private area is not null, or the contrary
 def fill_built_area(data):
     if pd.isna(data['built_area']) and pd.notna(data['private_area']):
         data['built_area'] = data['private_area']
     return data
-
 def fill_private_area(data):
     if pd.isna(data['private_area']) and pd.notna(data['built_area']):
         data['private_area'] = data['built_area']
     return data
+df_copy = df_copy.apply(fill_built_area, axis=1)
+df_copy = df_copy.apply(fill_private_area, axis=1)
 
-# Le da formato a todos los barrios
+
+# Format neighbourhoods names
 def format_neighbourhoods(data):
     return data.strip().lower()
+df_copy['neighbourhood'] = df_copy['neighbourhood'].apply(format_neighbourhoods)
 
-# Asgina un estrato a los barrios que no tienes estrato, basado en los barrios ya preexistentes
+
+# Assing stratum to those neighbourhoods that don't have it, based on the name of the neighbourhood
 list_neighbourhood_stratum = df_copy.groupby(by=['neighbourhood'],as_index=False)['stratum'].max()
 def filter_neighbourhoods(data):
     if pd.isna(data['stratum']):
         if data['neighbourhood'] in list_neighbourhood_stratum['neighbourhood'].values:
-            data['stratum'] = list_neighbourhood_stratum[list_neighbourhood_stratum['neighbourhood'] == data['neighbourhood']]['stratum'].values
+            data['stratum'] = float(list_neighbourhood_stratum[list_neighbourhood_stratum['neighbourhood'] == data['neighbourhood']]['stratum'].values[0])
     return data
-
-# Toma el valor máximo entre el area construida y el area privada para considerar el area total de la propiedad
-def define_area(data):
-    private_area = data['private_area']
-    built_area = data['built_area']
-    return np.max([private_area, built_area])
-
-
-df_copy = df_copy.apply(fill_built_area, axis=1)
-
-df_copy = df_copy.apply(fill_private_area, axis=1)
-
-df_copy['neighbourhood'] = df_copy['neighbourhood'].apply(format_neighbourhoods)
-
 df_copy = df_copy.apply(filter_neighbourhoods, axis=1)
 
-df_copy['total_area'] = df_copy.apply(define_area, axis=1)
+
+# Keep the higher value between private_area and built_area to give a total_area of the property
+df_copy['total_area'] = df_copy[['private_area', 'built_area']].max(axis=1)
+
 
 df_copy['age'] = df_copy['age'].fillna('desconocido')
 
-# Elimina los valores vacios de estas columnas
+
+# Delete empty rows in any of the following columns, this data is important for the model
 rows_to_dropna = ['bathrooms',
                   'rooms',
-                  'built_area']
+                  'built_area',
+                  'stratum']
 df_copy = df_copy.dropna(subset=rows_to_dropna)
 
 
-# Estas variables no son utiles 
-columns_to_drop = ['type',          # type es solo casa 
-                   'status',        # status hay 880 variables vacias
-                   'private_area',  # private_area es en el 60% de los casos es igual a built area
-                   'built_area',    # se totaliza entre private_area y total_area la mayor
-                   'rs_agent',      # no se usara para entrenar el modelo
-                   'registered_date'# no presenta información como tal de la propiedad
+# These variables are not important for the model:
+# type has only one value
+# status has 880 empty rows
+# private_area and built_area were condensed in one new columns
+columns_to_drop = ['type', 
+                   'status', 
+                   'private_area', 
+                   'built_area',
+                   'rs_agent',
+                   'registered_date'
                    ]
 df_copy = df_copy.drop(columns_to_drop, axis=1)
 
@@ -77,10 +74,15 @@ dict_age = {
 }
 df_copy['age'] = df_copy['age'].map(dict_age)
 
+
 df_copy = df_copy.reset_index(drop=True)
 
+
+# Delete the values of the houses that were registered wrong in the platform
+df_copy = df_copy[df_copy['fixed_price'] <= 3000000000].copy()
+
+
+# Export data
 df_copy.to_feather("../data/preprocessed_data.feather")
-
-
 
 
