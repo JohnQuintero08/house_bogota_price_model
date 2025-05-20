@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import IsolationForest, RandomForestRegressor
 from sklearn.preprocessing import RobustScaler
 import hdbscan
+import joblib
 
 ran =62
 
@@ -98,7 +99,9 @@ def predict_hdb_anomalies(df, df_train, has_print=False):
     new_df = df.copy()
     features_hdb = new_df[features_isolation_array]
     test_labels, strengths = hdbscan.approximate_predict(cluster_hdb, features_hdb)
+    joblib.dump(cluster_hdb, 'features/model_hdbscan_anomalies_predictor.pkl')
     new_df['is_anomaly'] = [1 if i == -1 else 0 for i in test_labels ]
+    
     
     print('Total anomalies:' , len(new_df.query('is_anomaly == 1')))
     
