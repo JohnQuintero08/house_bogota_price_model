@@ -84,4 +84,6 @@ df_copy = df_copy[df_copy['fixed_price'] <= 3000000000].copy()
 
 df_copy.to_feather("data/intermediate/preprocessed_data.feather")
 
-
+# Save the list of the neighbourhoods that was used to train the model
+df_neighbourhood_stratum = pd.DataFrame(list_neighbourhood_stratum)
+df_neighbourhood_stratum.to_feather("preprocess/neighbourhood_stratum.feather") 

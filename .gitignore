@@ -3,3 +3,4 @@ data/*
 tmp/*
 .venv
 __pycache__/
+pipeline/pp0_data/*
