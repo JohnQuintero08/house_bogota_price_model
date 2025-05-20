@@ -9,11 +9,14 @@ def fill_built_area(data):
     if pd.isna(data['built_area']) and pd.notna(data['private_area']):
         data['built_area'] = data['private_area']
     return data
+
 def fill_private_area(data):
     if pd.isna(data['private_area']) and pd.notna(data['built_area']):
         data['private_area'] = data['built_area']
     return data
+
 df_copy = df_copy.apply(fill_built_area, axis=1)
+
 df_copy = df_copy.apply(fill_private_area, axis=1)
 
 
@@ -57,7 +60,9 @@ columns_to_drop = ['type',
                    'private_area', 
                    'built_area',
                    'rs_agent',
-                   'registered_date'
+                   'registered_date',
+                   'id', 
+                   'neighbourhood'
                    ]
 df_copy = df_copy.drop(columns_to_drop, axis=1)
 
@@ -81,6 +86,14 @@ dict_age = {
 
 df_copy['age'] = df_copy['age'].map(dict_age)
 
+# Prices in thousand millions of pesos
+df_copy['fixed_price'] = df_copy['fixed_price']/1000000
+
+# There is data that is too large for a home's price considering the prices of other homes. When analyzing this houses, its characteristics are fairly standard, so it's believed there may be an error and it's filtered out.
+
+# Around 99% of the houses have a price lower than 6000 millions pesos. That's why the price will be restricted.
+
+df_copy = df_copy[df_copy['fixed_price'] <= 6000] 
 
 df_copy = df_copy.reset_index(drop=True)
 
