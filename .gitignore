@@ -1,5 +1,5 @@
-# /ipynb/*
-/data/*
-/.vscode/*
-/tmp/*
+data/*
+.vscode/*
+tmp/*
 .venv
+__pycache__/

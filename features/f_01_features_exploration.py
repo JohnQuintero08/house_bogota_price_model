@@ -244,9 +244,9 @@ df_test_selected_features = remove_features_df(df_test)
 # New features 
 
 
-df_train_new_features = create_new_features(df_train), list_new_features
-df_valid_new_features = create_new_features(df_valid), list_new_features
-df_test_new_features  = create_new_features(df_test), list_new_features
+df_train_new_features = create_new_features(df_train)
+df_valid_new_features = create_new_features(df_valid)
+df_test_new_features  = create_new_features(df_test)
 
 
 # New features amenities removed
