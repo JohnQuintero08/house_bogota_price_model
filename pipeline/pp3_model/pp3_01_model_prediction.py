@@ -40,19 +40,29 @@ def graph_predictions(target, predictions):
     plt.show()
 
 
-def model_prediction(model, df, has_plot=False):
-
+def model_prediction( df, has_plot=False):
+    
+    model = joblib.load('pipeline/pp3_model/predictor_xgb_model.joblib')
+    
     features, target = features_target_split(df)
     predictions_t = model.predict(features)
-    print(predictions_t)
-
+    
+    format_predictions = {
+    'real'          : np.round(target,1),
+    'prediction'    : predictions_t,
+    'residual'      : np.round(predictions_t - target,1),
+    'percentage'    : np.round((abs((predictions_t-target)) / target)*100,1)
+    }
+    answer = pd.DataFrame(format_predictions)
+    
     metrics_eval(target, predictions_t, 'New data')
-
+    print(answer)
     if has_plot:
         graph_predictions(target, predictions_t)
         
     return predictions_t
 
-xgb_model = joblib.load('pipeline/pp3_model/predictor_xgb_model.joblib')
+
+
 df = pd.read_feather('pipeline/pp0_data/pp2_01_data.feather')
-predictions = model_prediction(xgb_model, df, True)
+predictions = model_prediction(df, True)

@@ -45,6 +45,10 @@ def predict_hdb_anomalies(df, has_print=False):
     
     print('Total anomalies:' , len(new_df.query('is_anomaly == 1')))
     
+    houses_with_anomalies = new_df.query('is_anomaly == 1')
+    for index, house in houses_with_anomalies.iterrows():
+        print(f'The price of the house with code: {index} can not be predicted, characteristics out of the bounds')
+    
     if has_print:
         scatterplot_one(new_df)
         pairplot_one(new_df)
@@ -89,7 +93,8 @@ def create_new_features(df):
 
 def develop_feature_engineering(df):
     df_c = df.copy()
-    df_c = df_c.drop(['id', 'neighbourhood'], axis=1)
+    df_c = df_c.set_index(['id'])
+    df_c = df_c.drop(['neighbourhood'], axis=1)
     df_c = predict_hdb_anomalies(df_c)
     df_c = create_new_features(df_c)
     df_c = remove_features_df(df_c)
@@ -99,7 +104,6 @@ def develop_feature_engineering(df):
 df = pd.read_feather('pipeline/pp0_data/pp1_02_data.feather')
 
 df_model = df.copy()
-df_model.info()
 df_model = develop_feature_engineering(df_model)
 
 df_model.to_feather('pipeline/pp0_data/pp2_01_data.feather')
