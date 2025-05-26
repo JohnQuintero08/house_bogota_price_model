@@ -27,6 +27,8 @@ from features.f_01_features_exploration import df_train_new_features_removed
 from features.f_01_features_exploration import df_valid_new_features_removed
 from features.f_01_features_exploration import df_hdb_newf_train
 from features.f_01_features_exploration import df_hdb_newf_valid
+from features.f_02_log_transform import df_train_log_nf_r
+from features.f_02_log_transform import df_valid_log_nf_r
 
 
 # Functions
@@ -105,6 +107,7 @@ model_evaluation(model_linear, df_train_new_features, df_valid_new_features, 'Li
 
 model_evaluation(model_linear, df_train_new_features_removed, df_valid_new_features_removed, 'Linear regression - New features and feature selection')
 
+model_evaluation(model_linear, df_train_log_nf_r, df_valid_log_nf_r, 'Linear regression  - Log transformation + New features', True)
 
 # ### Random Forest
 
@@ -170,7 +173,8 @@ model_evaluation(model_xgb, df_cluster_hdb_train_drop, df_cluster_hdb_valid_drop
 
 model_evaluation(model_xgb, df_hdb_newf_train, df_hdb_newf_valid, 'XGBoost - Cluster HDBSCAN + New features')
 
-
+model_evaluation(model_xgb, df_train_log_nf_r, df_valid_log_nf_r, 'XGBoost - Log transformation + New features', True)
 # Best performance 
 
-df_hdb_newf_train.to_feather('data/intermediate/data_best_performance_model.feather')
+# df_hdb_newf_train.to_feather('data/intermediate/data_best_performance_model.feather')
+# df_train_log_nf_r.to_feather('data/intermediate/data_log_performance_model.feather')
