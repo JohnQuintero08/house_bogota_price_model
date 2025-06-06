@@ -1,76 +1,63 @@
-# Bogotá Housing Price Prediction
+# House Bogotá Price Model
 
-This project builds a machine learning model to predict housing prices in Bogotá, Colombia, using data collected through web scraping from a real estate website. A total of 1,000 listings were scraped and processed.
+## Project Overview:
 
-## Project Structure
+- This project employs data obtained through web scraping to predict housing prices in Bogotá based on various property characteristics.
+- Data cleaning and transformation is performed using libraries such as Pandas and NumPy, preparing the dataset for machine learning model training.
+- An exploratory data analysis (EDA) revealed significant insights regarding property features and their influence on pricing.
+- The final model selected for prediction is a XGBoost Regressor, which performed exceptionally well on the test dataset with a RMSE of
+- The project structure includes dedicated folders for processing, feature engineering, and model evaluation, making it modular and easy to understand.
 
-### 1. `preprocess/`
+## Motivation:
 
-This folder contains Python scripts to clean and preprocess the raw scraped data. Tasks include:
+Understanding the dynamics of housing prices is crucial in a rapidly urbanizing city like Bogotá. This project aims to provide valuable insights for potential homebuyers and investors by accurately predicting real estate prices based on various attributes. The significance of this project lies in its potential to guide financial decisions by providing a clearer understanding of market trends.
 
-- Standardizing column names and fixing data types.
-- Handling missing or inconsistent values.
-- Preparing the data for further analysis and modeling.
+The choice of tools like Scrapy and Selenium for data scraping, along with machine learning libraries such as scikit-learn, streamlines the process of gathering and analyzing data. These tools allow not only efficient data collection but also robust model training and evaluation, thereby addressing the challenges of predicting complex outcomes like housing prices effectively.
 
-### 2. `insights/`
+## Code and Resources:
 
-Exploratory Data Analysis (EDA) is conducted here to:
+- Main libraries used include: Pandas, Numpy, Scikit-learin, Seaborn, Matplotlib.
+- To install the necessary libraries, run:
+  ```bash
+  pip install -r requirements.txt
+  ```
 
-- Understand feature distributions and relationships.
-- Identify patterns, trends, and potential outliers.
+## Data Collection:
 
-### 3. `features/`
+Data for this project was sourced through web scraping, primarily from a Colombian housing website. The detailed methodology for scraping can be found in the linked project: [House Scraping Web](https://github.com/JohnQuintero08/house_scraping_web).
 
-Multiple versions of the dataset are generated to explore which transformations yield better model performance. This includes:
+## EDA:
 
-- Feature engineering (creation of new variables).
-- Outlier filtering using HDBSCAN and Isolation Forest.
-- Feature selection.
-- Data scaling.
+Some notable findings from the exploratory data analysis include:
 
-### 4. `models/`
+- The distribution of housing prices showcased a right-skewed trend, indicating that most properties fall within lower price ranges, with few high-value outliers.
+- Around 96% of the houses have a price lower than 3000 millions pesos.
+- The stratum 3 and 4 is predomiinant over the others.
+- The area is the most correlated variable with the price as they have similar distribution.
 
-This section explores several regression algorithms:
+![Histogram of price distribution](files/plots/histogram_price_distribution.png)  
+_Histogram of price distribution_
+
+## Processing and Feature Engineering:
+
+Several processing steps were undertaken for feature engineering, including:
+
+- Handling of outlier entries with HDBSCAN algorith.
+- Encoding categorical variables and normalizing numerical features to ensure the effectiveness of various machine learning algorithms.
+- Creation of new variables based on existing features to enhance the model's predictive power as rooms per area and total amenities.
+
+## Model Building:
+
+In the model building phase, different regression models were tested, including:
 
 - Linear Regression
 - Random Forest Regressor
-- XGBoost Regressor
+- XGBoost
 
-Each model is evaluated using regression metrics such as **MAE** (Mean Absolute Error) and **RMSE** (Root Mean Square Error). Grid Search is applied to optimize the best-performing model.
+## Model Performance:
 
-### 5. `pipeline/`
+The selected model for optimization was the XGBoost, which demonstrated superior performance metrics, including a Mean Absolute Error (MAE) on the test dataset. The XGBoost model had a 27% MAE reduction compared to the Liner Regression. Finally the mean error percentage after optimizartion for the test dataset was 19%.
 
-A full pipeline is defined to allow processing and prediction on new data obtained from the same real estate site.
+## Pipeline:
 
-### 6. `files/`
-
-Contains selected outputs and variable importance analysis. According to the results, **housing area** is the most influential feature in predicting the price.
-
-## Final Model and Results
-
-The best model is an **XGBoost Regressor**, trained on:
-
-- A dataset filtered using **HDBSCAN** to remove noise.
-- Additional engineered features.
-- Irrelevant features removed via feature selection.
-
-**Performance:**
-
-- Average error between **15% and 20%**.
-- Most accurate for properties priced **below 2 billion Colombian pesos**.
-
-## Future Improvements
-
-- Train with a larger dataset from the website or complementary external sources.
-- Integrate more socioeconomic or geographic features.
-- Improve model performance for high-priced properties.
-
-## Data Collection
-
-The data used in this project was obtained via web scraping. The scraping logic is available in a separate repository:
-
-👉 [house_scraping_web](https://github.com/JohnQuintero08/house_scraping_web)
-
----
-
-**Note:** This project is intended for educational and experimental purposes. The data and predictions should not be used for real financial decisions without further validation.
+To run the project, navigate to the pipeline directory and follow the instructions outlined in the README file.
