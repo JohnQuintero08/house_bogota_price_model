@@ -5,7 +5,7 @@
 - This project employs data obtained through web scraping to predict housing prices in Bogotá based on various property characteristics.
 - Data cleaning and transformation is performed using libraries such as Pandas and NumPy, preparing the dataset for machine learning model training.
 - An exploratory data analysis (EDA) revealed significant insights regarding property features and their influence on pricing.
-- The final model selected for prediction is a XGBoost Regressor, which performed exceptionally well on the test dataset with a RMSE of
+- The final model selected for prediction is a XGBoost Regressor, which performed exceptionally well on the test dataset with a MAE of 148.
 - The project structure includes dedicated folders for processing, feature engineering, and model evaluation, making it modular and easy to understand.
 
 ## Motivation:
