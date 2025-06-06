@@ -50,10 +50,7 @@ rows_to_dropna = ['bathrooms',
 df_copy = df_copy.dropna(subset=rows_to_dropna)
 
 
-# These variables are not important for the model:
-# type has only one value
-# status has 880 empty rows
-# private_area and built_area were condensed in one new columns
+
 columns_to_drop = ['type', 
                    'status', 
                    'private_area', 
