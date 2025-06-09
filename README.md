@@ -1,4 +1,3 @@
-````markdown
 # Real Estate Price Prediction Project
 
 ## Project Overview
@@ -72,8 +71,3 @@ To execute the project, follow these steps:
 1. Create a `pp0_data` folder and place the raw data inside using the scraping spider from the link provided before.
 2. Run the `pp4_01_exe.py` file located in the `pp4_execution` folder.
 3. The output will be displayed in the console.
-
-```
-
-```
-````
