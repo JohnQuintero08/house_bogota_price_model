@@ -16,17 +16,9 @@ The use of web scraping to gather data from a Colombian real estate website not 
 
 ## Code and Resources
 
-- Key libraries used in this project:
-  - Scikit-learn
-  - Pandas
-  - Matplotlib
-  - Seaborn
-  - XGBoost
+- Key libraries used in this project: Scikit-learn, Pandas, Matplotlib, Seaborn, XGBoost
 - To install the required libraries, run:
-  ```bash
   pip install -r requirements.txt
-  ```
-````
 
 ## Data Collection
 
@@ -84,3 +76,4 @@ To execute the project, follow these steps:
 ```
 
 ```
+````
