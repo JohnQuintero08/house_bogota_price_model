@@ -36,9 +36,15 @@ The data was collected through web scraping from a Colombian real estate website
 
 The exploratory data analysis yielded several important insights:
 
-- **Price Distribution**: The histogram and cumulative distribution function (CDF) of house prices indicate a right-skewed distribution, with most houses priced below 2000 million pesos. This is illustrated in the `histogram_price_distribution.png`.
-- **Area vs. Price**: A scatter plot (`area_vs_price.png`) shows a positive correlation between the total area of houses and their prices, with higher-stratum houses clustering at higher price points.
-- **Feature Importance**: The analysis of feature importance (`feature_importances.png`) revealed that total area is the most significant factor influencing house prices, followed by stratum, number of rooms, and bathrooms.
+- **Price Distribution**: The histogram and cumulative distribution function (CDF) of house prices indicate a right-skewed distribution, with most houses priced below 2000 million pesos.
+
+[Histogram of price distribution](files/plots/histogram_price_distribution.png).
+
+- **Area vs. Price**: A scatter plot of area vs price shows a positive correlation between the total area of houses and their prices, with lower-stratum houses clustering at lower price points.
+
+[area_vs_price.png](files/plots/area_vs_price.png)
+
+- **Feature Importance**: The analysis of feature importance revealed that total area is the most significant factor influencing house prices, followed by stratum, number of rooms, and bathrooms.
 
 ## Processing and Feature Engineering
 
