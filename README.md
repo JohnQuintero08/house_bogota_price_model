@@ -29,11 +29,11 @@ The exploratory data analysis yielded several important insights:
 
 - **Price Distribution**: The histogram and cumulative distribution function (CDF) of house prices indicate a right-skewed distribution, with most houses priced below 2000 million pesos.
 
-[Histogram of price distribution](files/plots/histogram_price_distribution.png).
+![Histogram of price distribution](files/plots/histogram_price_distribution.png).
 
 - **Area vs. Price**: A scatter plot of area vs price shows a positive correlation between the total area of houses and their prices, with lower-stratum houses clustering at lower price points.
 
-[area_vs_price.png](files/plots/area_vs_price.png)
+![Relation between area and price](files/plots/area_vs_price.png)
 
 - **Feature Importance**: The analysis of feature importance revealed that total area is the most significant factor influencing house prices, followed by stratum, number of rooms, and bathrooms.
 
